@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    background-color: #cdcdcd;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+header {
+    height: 50px;
+    background-color: #323232;
+}
+
+section {
+    width: 600px;
+    margin: 0 auto;
+}
+
+label {
+    float: left;
+    line-height: 50px;
+    color: #ddd;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#title {
+    float: right;
+    width: 60%;
+    height: 26px;
+    margin-top: 12px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.24), 0 1px 6px rgba(0, 0, 0, 0.45) inset;
+    text-indent: 10px;
+}
+
+input:focus {
+    outline-width: 0
+}
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+#todocount,
+#donecount {
+    float: right;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 5px;
+    margin-top: 6px;
+    background-color: #e6e6fa;
+    border-radius: 10px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+ol,
+ul {
+    padding: 0;
+    list-style: none;
+}
+
+ul li {
+    border-left: 5px solid #999;
+    opacity: 0.5;
+}
+
+li {
+    height: 32px;
+    line-height: 32px;
+    background-color: #fff;
+    border-left: 5px solid #629a9c;
+    border-radius: 3px;
+}
+
+li input {
+    margin: 5px 3px 0 15px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+li span {
+    vertical-align: top;
+}
+
+li a {
+    float: right;
+    width: 14px;
+    height: 14px;
+    margin-top: 3px;
+    margin-right: 5px;
+    border-radius: 15px;
+    border: 6px double #fff;
+    background: #CCC;
+    cursor: pointer;
+}
