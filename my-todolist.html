@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List---By MISO</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        background-color: #cdcdcd;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+
+      header {
+        height: 50px;
+        background-color: #323232;
+      }
+
+      section {
+        width: 600px;
+        margin: 0 auto;
+      }
+
+      label {
+        float: left;
+        line-height: 50px;
+        color: #ddd;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      #title {
+        float: right;
+        width: 60%;
+        height: 26px;
+        margin-top: 12px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.24),
+          0 1px 6px rgba(0, 0, 0, 0.45) inset;
+        text-indent: 10px;
+      }
+
+      input:focus {
+        outline-width: 0;
+      }
+
+      footer {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+      }
+
+      #todocount,
+      #donecount {
+        float: right;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 5px;
+        margin-top: 6px;
+        background-color: #e6e6fa;
+        border-radius: 10px;
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+      }
+
+      ol,
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+
+      ul li {
+        border-left: 5px solid #999;
+        opacity: 0.5;
+      }
+
+      li {
+        height: 32px;
+        line-height: 32px;
+        background-color: #fff;
+        border-left: 5px solid #629a9c;
+        border-radius: 3px;
+        margin: 10px 0;
+      }
+
+      li input {
+        margin: 5px 3px 0 15px;
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+      }
+
+      li span {
+        vertical-align: top;
+      }
+
+      li a {
+        float: right;
+        width: 14px;
+        height: 14px;
+        margin-top: 3px;
+        margin-right: 5px;
+        border-radius: 15px;
+        border: 6px double #fff;
+        background: #ccc;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <section>
+        <label for="title">ToDoList</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="添加ToDo"
+          required="required"
+          autocomplete="off"
+        />
+      </section>
+    </header>
+    <section>
+      <h2>正在进行<span id="todocount"></span></h2>
+      <ol id="todolist" class="todo-box"></ol>
+
+      <h2>已经完成<span id="donecount"></span></h2>
+      <ul id="donelist"></ul>
+    </section>
+
+    <footer>
+      Copyright &copy; 2020 todolist.cn
+    </footer>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+      $(function () {
+        load()
+        // 添加 todo
+        $('#title').on('keydown', function (event) {
+          if (event.keyCode === 13) {
+            if ($(this).val() === '') {
+              alert('请先输入任务内容哦！')
+            } else {
+              // 保存到本地
+              var local = getData()
+              local.push({ title: $(this).val(), done: false })
+              saveData(local)
+              //加载
+              load()
+              $(this).val('')
+            }
+          }
+        })
+
+        // 删除 todo
+        $('ol, ul').on('click', 'a', function () {
+          var data = getData()
+          var index = $(this).attr('id')
+          data.splice(index, 1)
+          saveData(data)
+          load()
+        })
+
+        //完成 todo
+        $('ol, ul').on('click', 'input', function () {
+          var data = getData()
+          var index = $(this).siblings('a').attr('id')
+          data[index].done = $(this).prop('checked')
+          saveData(data)
+          load()
+        })
+        // 读取本地数据
+        function getData() {
+          var data = localStorage.getItem('todolist')
+          if (data !== null) {
+            return JSON.parse(data)
+          } else {
+            return []
+          }
+        }
+
+        //保存本地数据
+        function saveData(data) {
+          localStorage.setItem('todolist', JSON.stringify(data))
+        }
+
+        //渲染加载数据
+        function load() {
+          var data = getData()
+          console.log(data)
+
+          // 遍历, 先清空
+          $('ol, ul').empty()
+          var todoCount = 0
+          var doneCount = 0
+          $.each(data, function (i, n) {
+            if (n.done) {
+              $('ul').prepend(
+                "<li><input type='checkbox' checked><span>" +
+                  n.title +
+                  "</span><a href='javascript:;' id=" +
+                  i +
+                  '></a></li>'
+              )
+              doneCount++
+            } else {
+              $('ol').prepend(
+                "<li><input type='checkbox'><span>" +
+                  n.title +
+                  "</span><a href='javascript:;' id=" +
+                  i +
+                  '></a></li>'
+              )
+              todoCount++
+            }
+          })
+          $('#todocount').text(todoCount)
+          $('#donecount').text(doneCount)
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>计算器</title>
+    <style>
+      body {
+        padding: 20px;
+        font-family: Arial;
+      }
+
+      .calc-wrap {
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+      }
+
+      .calc-operation {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      input {
+        box-sizing: border-box;
+        width: 300px;
+        height: 60px;
+        border: 1px solid #ddd;
+        padding-right: 10px;
+        text-align: right;
+        color: #999;
+        font-size: 30px;
+        font-weight: 700;
+        background-color: #eee;
+      }
+      .calc-operation td {
+        padding: 10px;
+        width: 25%;
+        text-align: center;
+        border: 1px solid #ddd;
+        font-size: 26px;
+        color: #888;
+        cursor: pointer;
+      }
+
+      .calc-operation td:hover,
+      .calc-operation td:active {
+        background-color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calc-wrap">
+      <input type="text" name="" id="showNum" value="0" />
+      <table class="calc-operation">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <td onclick="clearNum()" colspan="2">C</td>
+            <td onclick="ggoBack()">&larr;</td>
+            <td onclick="inpSymbol('×')">&times;</td>
+          </tr>
+          <tr>
+            <td onclick="inpNum('7')">7</td>
+            <td onclick="inpNum('8')">8</td>
+            <td onclick="inpNum('9')">9</td>
+            <td onclick="inpSymbol('÷')">&divide;</td>
+          </tr>
+          <tr>
+            <td onclick="inpNum('4')">4</td>
+            <td onclick="inpNum('5')">5</td>
+            <td onclick="inpNum('6')">6</td>
+            <td onclick="inpSymbol('+')">+</td>
+          </tr>
+          <tr>
+            <td onclick="inpNum('1')">1</td>
+            <td onclick="inpNum('2')">2</td>
+            <td onclick="inpNum('3')">3</td>
+            <td onclick="inpSymbol('-')">-</td>
+          </tr>
+          <td colspan="2" onclick="inpNum('0')">0</td>
+          <td onclick="inpPoint()">.</td>
+          <td onclick="inpEqual()">=</td>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      var beijiashu = ''
+      var fuhao = ''
+      var jiashu = ''
+
+      function inpNum(num) {
+        if (fuhao == '') {
+          beijiashu += num
+        } else {
+          jiashu += num
+        }
+        document.getElementById('showNum').value = beijiashu + fuhao + jiashu
+        console.log('beijiashu：' + beijiashu)
+        console.log('fuhao：' + fuhao)
+        console.log('jiashu：' + jiashu)
+      }
+
+      function inpSymbol(f) {
+        if (fuhao == '' && (beijiashu !== '' || s != '')) {
+          fuhao = f
+          if (beijiashu !== '') {
+            beijiashu = beijiashu
+          } else {
+            beijiashu = s
+          }
+          document.getElementById('showNum').value = beijiashu + fuhao
+          console.log('beijiashu：' + beijiashu)
+          console.log('fuhao：' + fuhao)
+          console.log('jiashu：' + jiashu)
+          console.log(s)
+        }
+      }
+
+      function clearNum() {
+        document.getElementById('showNum').value = 0
+        beijiashu = ''
+        jiashu = ''
+        fuhao = ''
+      }
+      var s = ''
+      function inpEqual() {
+        x = parseFloat(beijiashu)
+        y = parseFloat(jiashu)
+        if (fuhao == '+') {
+          s = x + y
+        } else if (fuhao == '-') {
+          s = x - y
+        } else if (fuhao == '×') {
+          s = x * y
+        } else if (fuhao == '÷') {
+          s = x / y
+        }
+        document.getElementById('showNum').value = s
+        // .toFixed(2) + ''
+        console.log('beijiashu：' + beijiashu)
+        console.log('fuhao：' + fuhao)
+        console.log('jiashu：' + jiashu)
+        console.log('=' + s)
+
+        beijiashu = ''
+        fuhao = ''
+        jiashu = ''
+        // s = ''
+      }
+      function inpPoint() {
+        if (fuhao == '' && beijiashu !== '' && beijiashu.indexOf('.') == -1) {
+          beijiashu = beijiashu + '.'
+        } else if (jiashu !== '' && jiashu.indexOf('.') == -1) {
+          jiashu = jiashu + '.'
+        } else if (fuhao == '' && beijiashu == '') {
+          beijiashu = 0 + '.'
+        } else if (fuhao !== '' && beijiashu !== '') {
+          jiashu = 0 + '.'
+        }
+        document.getElementById('showNum').value = beijiashu + fuhao + jiashu
+        console.log('beijiashu：' + beijiashu)
+        console.log('fuhao：' + fuhao)
+        console.log('jiashu：' + jiashu)
+        console.log('=' + s)
+      }
+      function ggoBack() {
+        if (jiashu.length > 0) {
+          jiashu = jiashu.substring(0, jiashu.length - 1)
+        } else if (fuhao.length > 0) {
+          fuhao = fuhao.substring(0, fuhao.length - 1)
+        } else if (beijiashu.length > 0) {
+          beijiashu = beijiashu.substring(0, beijiashu.length - 1)
+        }
+        document.getElementById('showNum').value = beijiashu + fuhao + jiashu
+      }
+    </script>
+  </body>
+</html>
